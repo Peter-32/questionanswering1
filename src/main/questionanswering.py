@@ -17,7 +17,7 @@ PARSER.add_argument('--question', metavar='string', required=True, help="The que
 ARGS = PARSER.parse_args()
 question = ARGS.question
 sentences = [question]
-#### Load Facebook's InferSent
+#### Load Facebook's InferSent (download the files from the internet)
 infersent = InferSent({'bsize': 64, 'word_emb_dim': 300, 'enc_lstm_dim': 2048,
                 'pool_type': 'max', 'dpout_model': 0.0, 'version': 1})
 infersent.load_state_dict(torch.load('/Users/petermyers/Desktop/Other/data/InferSent/encoder/infersent1.pkl'))
