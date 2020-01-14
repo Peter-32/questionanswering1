@@ -34,7 +34,7 @@ embeddings = infersent.encode(sentences, tokenize=True, verbose=False)
 distances = pdist(np.array(embeddings), metric='euclidean')
 sentence_similarity_matrix = squareform(distances)
 most_relevant_pages = np.argsort(sentence_similarity_matrix[0][1:])
-#### Extract the content on the most relevant page
+#### Extract the content on the most relevant page (tries multiple pages in case of failure)
 for page in most_relevant_pages:
     try:
         content_on_the_page = wikipedia.page(wikipedia_pages[page]).content
