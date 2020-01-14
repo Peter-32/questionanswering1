@@ -42,7 +42,7 @@ for best_match in best_matches:
     except:
         pass
 
-# Choose the most relevant sentences
+# Find and print the most relevant sentences
 #### Split the content into sentences
 sents = nltk.sent_tokenize(content_on_the_page)
 #### Convert sentences into numbers
@@ -53,13 +53,13 @@ embeddings = infersent.encode(sentences, tokenize=True, verbose=False)
 embeddings = np.array(embeddings)
 distances = pdist(embeddings, metric='euclidean')
 sentence_similarity_matrix = squareform(distances)
-best_matches = list(np.argsort(sentence_similarity_matrix[0][1:]))
+most_relevant_sentences = list(np.argsort(sentence_similarity_matrix[0][1:]))
 #### Print the most relevant sentences
 print("\n")
 found=0
-for best_match in best_matches:
+for sentence in most_relevant_sentences:
     if found >= 5:
         break
-    if len(sents[best_match]) > 60:
+    if len(sents[sentence]) > 60:
         found+=1
-        print(sents[best_match], "\n")
+        print(sents[sentence], "\n")
