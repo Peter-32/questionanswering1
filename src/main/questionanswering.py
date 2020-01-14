@@ -25,19 +25,20 @@ infersent.set_w2v_path('/Users/petermyers/Desktop/Other/data/GloVe/glove.840B.30
 
 # Extract the most relevant Wikipedia page
 #### Wikipedia recommends 10 pages
-sentences = sentences + wikipedia.search(question)
+wikipedia_pages = wikipedia.search(question)
+sentences = sentences + wikipedia_pages
 #### Convert sentences to numbers
 infersent.build_vocab(sentences, tokenize=True)
 embeddings = infersent.encode(sentences, tokenize=True, verbose=False)
-#### Choose the most relevant page
+#### Choose the most relevant pages
 embeddings = np.array(embeddings)
 distances = pdist(embeddings, metric='euclidean')
 sentence_similarity_matrix = squareform(distances)
-best_matches = np.argsort(sentence_similarity_matrix[0][1:])
-#### Extract the content on the page
-for best_match in best_matches:
+most_relevant_pages = np.argsort(sentence_similarity_matrix[0][1:])
+#### Extract the content on the most relevant page
+for page in most_relevant_pages:
     try:
-        content_on_the_page = wikipedia.page(matches[best_match]).content
+        content_on_the_page = wikipedia.page(wikipedia_pages[page]).content
         break
     except:
         pass
