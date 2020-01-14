@@ -31,8 +31,7 @@ sentences = sentences + wikipedia_pages
 infersent.build_vocab(sentences, tokenize=True)
 embeddings = infersent.encode(sentences, tokenize=True, verbose=False)
 #### Choose the most relevant pages
-embeddings = np.array(embeddings)
-distances = pdist(embeddings, metric='euclidean')
+distances = pdist(np.array(embeddings), metric='euclidean')
 sentence_similarity_matrix = squareform(distances)
 most_relevant_pages = np.argsort(sentence_similarity_matrix[0][1:])
 #### Extract the content on the most relevant page
@@ -51,8 +50,7 @@ sentences = [question] + sents
 infersent.build_vocab(sentences, tokenize=True)
 embeddings = infersent.encode(sentences, tokenize=True, verbose=False)
 #### Choose the most relevant sentences
-embeddings = np.array(embeddings)
-distances = pdist(embeddings, metric='euclidean')
+distances = pdist(np.array(embeddings), metric='euclidean')
 sentence_similarity_matrix = squareform(distances)
 most_relevant_sentences = list(np.argsort(sentence_similarity_matrix[0][1:]))
 #### Print the most relevant sentences
